@@ -3,6 +3,9 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
+import chatbotRoutes from "./routes/chatbot.routes.js";
+
+
 const app = express();
 dotenv.config()
 
@@ -13,13 +16,16 @@ mongoose.connect(process.env.MONGO_URL)
   .then(() => {
     console.log("Connected to MongoDB");
   })
+
   .catch((error) => {
     console.log("Error connecting to MongoDB:", error);
   });
 
+   //defining routes
+   app.use("/bot/v1/",chatbotRoutes)
+
 
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Express app listening at http://localhost:${port}`);
-});
+app.listen(8000, () => console.log("Server running on 8000"));
+
