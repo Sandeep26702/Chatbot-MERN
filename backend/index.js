@@ -1,31 +1,30 @@
-//const express = require('express');
-import express from 'express';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-
+import express from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 import chatbotRoutes from "./routes/chatbot.routes.js";
+import cros from 'cros';
 
+dotenv.config();
 
 const app = express();
-dotenv.config()
+const port = process.env.PORT || 3000;
 
-const port = process.PORT ||3000;
+// Middleware
+app.use(express.json());
+app.use (cros());
 
-//Database connection code
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URL)
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
+  .then(() => console.log("Connected to MongoDB Atlas"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
-  .catch((error) => {
-    console.log("Error connecting to MongoDB:", error);
-  });
+// Routes
+app.use("/bot/v1", chatbotRoutes);
 
-   //defining routes
-   app.use("/bot/v1/",chatbotRoutes)
+// Test route
+app.get("/", (req, res) => {
+  res.send("Chatbot API is running");
+});
 
-
-
-// Start the server
-app.listen(8000, () => console.log("Server running on 8000"));
-
+// Start server
+app.listen(port, () => console.log(`Server running on ${port}`));
