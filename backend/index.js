@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import chatbotRoutes from "./routes/chatbot.routes.js";
-import cros from 'cros';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -11,12 +11,14 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
-app.use (cros());
+app.use(cors());
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URL)
-  .then(() => console.log("Connected to MongoDB Atlas"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+if(process.env.MONGO_URL) {
+  mongoose.connect(process.env.MONGO_URL)
+    .then(() => console.log("Connected to MongoDB"))
+    .catch((err) => console.error("MongoDB connection error:", err));
+}
 
 // Routes
 app.use("/bot/v1", chatbotRoutes);
