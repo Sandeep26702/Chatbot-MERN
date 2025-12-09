@@ -18,6 +18,11 @@ export const Message = async (req, res) => {
     // Predefined bot responses
     const botResponses = {
       "hello": "Hi, How I can help you!!",
+      "hi": "Hello! How can I assist you today?",
+      "hey": "Hey there! What’s up?",
+      "good morning": "Good morning! Have a great day ahead!",
+      "good night": "Good night! Sleep well!",
+      "hello": "Hi, How I can help you!!",
       "can we become friend": "Yes",
       "how are you": "I'm just a bot, but I'm doing great! How about you?",
       "what is your name?": "I’m ChatBot, your virtual assistant.",
